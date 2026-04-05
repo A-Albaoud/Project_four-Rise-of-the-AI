@@ -3,11 +3,11 @@
 
 #include "Map.h"
 
-enum Direction    { LEFT, UP, RIGHT, DOWN              }; // For walking
-enum EntityStatus { ACTIVE, INACTIVE                   };
+enum Direction    { LEFT, UP, RIGHT, DOWN                     }; // For walking
+enum EntityStatus { ACTIVE, INACTIVE                          };
 enum EntityType   { PLAYER, BLOCK, PLATFORM, NPC, NONE, ENEMY};
-enum AIType       { WANDERER, FOLLOWER                 };
-enum AIState      { WALKING, IDLE, FOLLOWING           };
+enum AIType       { WANDERER, FOLLOWER, FLYER                 };
+enum AIState      { WALKING, IDLE, FOLLOWING                  };
 
 class Entity
 {
@@ -37,6 +37,7 @@ private:
 
     int mSpeed;
     float mAngle;
+    float mStartY;
 
     bool mIsCollidingTop    = false;
     bool mIsCollidingBottom = false;
@@ -71,6 +72,7 @@ private:
     void AIActivate(Entity *target, Map *map);
     void AIWander(Map *map);
     void AIFollow(Entity *target);
+    void AIFlyer(Entity *target);
 
 public:
     static constexpr int   DEFAULT_SIZE          = 250;
@@ -125,6 +127,8 @@ public:
     AIType      getAIType()                const { return mAIType;                }
     AIState     getAIState()               const { return mAIState;               }
     bool        overlaps(Entity *other)    const { return isColliding(other);     }
+    void setStartY(float y) { mStartY = y; }
+    float getStartY() const { return mStartY; }
 
     
     bool isCollidingTop()    const { return mIsCollidingTop;    }

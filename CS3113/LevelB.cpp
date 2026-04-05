@@ -184,7 +184,7 @@ void LevelB::update(float deltaTime)
          Scene::lives--;
 
          if (Scene::lives <= 0) mGameState.nextSceneID = 3;
-         else                   mGameState.nextSceneID = 2;
+         else                   mGameState.nextSceneID = 1;
 
          return;
       }

@@ -279,6 +279,28 @@ void Entity::AIFollow(Entity *target)
     }
 }
 
+void Entity::AIFlyer(Entity *target)
+{
+    mMovement.x = 0.0f;
+
+    float flyRange = 120.0f;
+    float flySpeed = 1.0f;
+
+    if (mDirection == UP)
+    {
+        mMovement.y = -flySpeed;
+
+        if (mPosition.y <= mStartY - flyRange)
+            mDirection = DOWN;
+    }
+    else
+    {
+        mMovement.y = flySpeed;
+
+        if (mPosition.y >= mStartY + flyRange)
+            mDirection = UP;
+    }
+}
 
 void Entity::AIActivate(Entity *target, Map *map)
 {
@@ -291,7 +313,10 @@ void Entity::AIActivate(Entity *target, Map *map)
     case FOLLOWER:
         AIFollow(target);
         break;
-    
+
+    case FLYER:
+        AIFlyer(target);
+        break;    
     default:
         break;
     }
@@ -307,7 +332,8 @@ void Entity::update(float deltaTime, Entity *player, Map *map,
     resetColliderFlags();
 
     mVelocity.x = mMovement.x * mSpeed;
-
+    
+    if (mAIType == FLYER) {mVelocity.y = mMovement.y * mSpeed;}
     mVelocity.x += mAcceleration.x * deltaTime;
     mVelocity.y += mAcceleration.y * deltaTime;
 

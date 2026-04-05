@@ -52,8 +52,8 @@ void LevelC::initialise()
 
    mGameState.player->setJumpingPower(550.0f);
    mGameState.player->setColliderDimensions({
-      mGameState.player->getScale().x / 3.5f,
-      mGameState.player->getScale().y / 3.0f
+   mGameState.player->getScale().x / 3.5f,
+   mGameState.player->getScale().y / 3.0f
    });
    mGameState.player->setAcceleration({0.0f, 300.0f});
    mGameState.player->hasShield = false;
@@ -63,17 +63,18 @@ void LevelC::initialise()
    mGameState.enemies = new Entity*[mGameState.enemyCount];
 
    mGameState.enemies[0] = new Entity(
-      { mOrigin.x - 180.0f, mOrigin.y + 650.0f },
+      { mOrigin.x - 150.0f, mOrigin.y + 300.0f },
       { 63.0f, 63.0f },
       "assets/game/Clyde_single.png",
       ENEMY
    );
 
-   mGameState.enemies[0]->setAIType(WANDERER);
-   mGameState.enemies[0]->setAIState(IDLE);
+   mGameState.enemies[0]->setAIType(FLYER);
+   mGameState.enemies[0]->setAIState(WALKING);
    mGameState.enemies[0]->setColliderDimensions({40.0f, 40.0f});
-   mGameState.enemies[0]->setAcceleration({0.0f, 650.0f});
-   mGameState.enemies[0]->setDirection(LEFT);
+   mGameState.enemies[0]->setAcceleration({0.0f, 0.0f});
+   mGameState.enemies[0]->setDirection(UP);
+   mGameState.enemies[0]->setStartY(mGameState.enemies[0]->getPosition().y);
 
    mGameState.enemies[1] = new Entity(
       { mOrigin.x + 220.0f, mOrigin.y + 150.0f },
@@ -184,7 +185,7 @@ void LevelC::update(float deltaTime)
          Scene::lives--;
 
          if (Scene::lives <= 0) mGameState.nextSceneID = 3;
-         else                   mGameState.nextSceneID = 2;
+         else                   mGameState.nextSceneID = 1;
 
          return;
       }
