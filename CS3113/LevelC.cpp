@@ -65,7 +65,7 @@ void LevelC::initialise()
    mGameState.enemies[0] = new Entity(
       { mOrigin.x - 150.0f, mOrigin.y + 300.0f },
       { 63.0f, 63.0f },
-      "assets/game/Clyde_single.png",
+      "assets/game/inky.png",
       ENEMY
    );
 
